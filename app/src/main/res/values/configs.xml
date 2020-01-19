@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Maps SDK credentials-->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBeXHmE5S6iOPBITCbfiaLKWcD_2Eqs8Uw</string>
+
+    <!--Facebook SDK credentials-->
+    <string name="facebook_application_id">2754246241292665</string>
+    <string name="fb_login_protocol_scheme">fb2754246241292665</string>
+
+    <!--Twitter SDK credentials-->
+    <string name="twitter_consumer_key" translatable="false">qiMgY3Fd0n2zaF38ShVbTxElp</string>
+    <string name="twitter_consumer_secret" translatable="false">9C1CAf9OShgjJEJJef22boOq7Ev4UdToOGoJZMplQKvF7cs2JX</string>
+
+    <!--Watson Assistant service credentials-->
+    <string name="assistant_id">3cbb9a5a&#8211;b7cc&#8211;4f8a&#8211;83b1&#8211;2d3a392474bd</string>
+    <string name="assistant_apikey">i1vQB8JxltTBKhJkXFAbXH_niA0i3c6RluTTkLd-gSqF</string>
+    <string name="assistant_url">https://gateway&#8211;lon.watsonplatform.net/assistant/api/v2/assistants/3cbb9a5a&#8211;b7cc&#8211;4f8a&#8211;83b1&#8211;2d3a392474bd/sessions</string>
+
+    <!--Watson Speech To Text(STT) service credentials-->
+    <!-- REPLACE `STT_API_KEY_HERE` with Watson Speech to Text service API Key-->
+    <string name="STT_apikey">STT_API_KEY_HERE</string>
+
+    <!-- The URL provided below is for DALLAS region/location -->
+    <!-- If the STT service is created in another region/lpcation -->
+    <!-- REPLACE the URL with STT URL provided in the service credentials -->
+    <string name="STT_url">https://stream.watsonplatform.net/speech-to-text/api</string>
+
+    <!--Watson Text To Speech(TTS) service credentials-->
+    <!-- REPLACE `TTS_API_KEY_HERE` with Watson Text to Speech service API Key-->
+    <string name="TTS_apikey">TTS_API_KEY_HERE</string>
+
+    <!-- The URL provided below is for DALLAS region/location -->
+    <!-- If the TTS service is created in another region/lpcation -->
+    <!-- REPLACE the URL with TTS URL provided in the service credentials -->
+    <string name="TTS_url">https://stream.watsonplatform.net/text-to-speech/api</string>
+</resources>

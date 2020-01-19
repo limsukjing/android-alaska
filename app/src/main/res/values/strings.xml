@@ -1,7 +1,33 @@
 <resources>
     <string name="app_name">Alaska</string>
+    <string name="title_fragment_maps">Map</string>
+
     <string name="title_dashboard">Dashboard</string>
     <string name="title_chat">Chat</string>
     <string name="title_discover">Discover</string>
     <string name="title_profile">Profile</string>
+    <string name="title_avatar">Avatar</string>
+    <string name="title_username">Username</string>
+    <string name="title_email">Email</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="prompt_podcast">Listen to Podcasts / Playlists</string>
+    <string name="prompt_map">Find Nearby Hospitals</string>
+    <string name="prompt_current_location">Current Location</string>
+    <string name="prompt_user_input">Please enter your query here</string>
+
+    <string name="action_logout">Logout</string>
+    <string name="action_delete_account">Delete Account</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="action_cancel">Cancel</string>
+
+    <string name="message_login_error">Login unsuccessful - please try again later.</string>
+    <string name="message_logout_error">Logout unsuccessful - please try again later.</string>
+    <string name="message_removal_error">Failed to delete account - please try again later.</string>
+    <string name="message_network_error">Network error - please try again later.</string>
+    <string name="message_unknown_error">An error has occurred - please try again later.</string>
+    <string name="message_avatar_error">Profile picture cannot be displayed - please refresh.</string>
+    <string name="message_current_location_error">Invalid location</string>
+    <string name="message_api_connection_error">Connection to GoogleApiClient failed.</string>
+    <string name="message_api_connection_suspended">Connection to GoogleApiClient suspended.</string>
 </resources>

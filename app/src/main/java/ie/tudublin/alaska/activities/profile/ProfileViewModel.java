@@ -1,19 +1,41 @@
 package ie.tudublin.alaska.activities.profile;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import ie.tudublin.alaska.model.User;
 
 public class ProfileViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private FirebaseUser currentUser;
+    private MutableLiveData<User> userLiveData;
 
     public ProfileViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is profile fragment");
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    /**
+     * get methods to retrieve user data such as
+     * email address, username, and photo url
+     */
+    public LiveData<User> getUserData() {
+        if(currentUser != null) {
+            userLiveData = new MutableLiveData<>();
+
+            User user = new User();
+            user.setEmail(currentUser.getEmail());
+            user.setUsername(currentUser.getDisplayName());
+
+            if(currentUser.getPhotoUrl() != null) {
+                user.setPhotoURL(currentUser.getPhotoUrl().toString());
+            }
+
+            userLiveData.setValue(user);
+        }
+
+        return userLiveData;
     }
 }

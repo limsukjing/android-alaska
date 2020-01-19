@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "740948628555",
+    "firebase_url": "https://agile-coral-259101.firebaseio.com",
+    "project_id": "agile-coral-259101",
+    "storage_bucket": "agile-coral-259101.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:740948628555:android:ba4acb474fa61c1f08a9ce",
+        "android_client_info": {
+          "package_name": "ie.tudublin.alaska"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "740948628555-t7g2leql391f9psnc803ulksf0p05eku.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ie.tudublin.alaska",
+            "certificate_hash": "d87b4594da3735fcf2b475a2d7ebcd6635718c6b"
+          }
+        },
+        {
+          "client_id": "740948628555-isl157si6bmc0a2l3mqslcvnn4ct6b5s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyGMRPVd0r__8KYpXfK6j6W74FZpSmKvI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "740948628555-isl157si6bmc0a2l3mqslcvnn4ct6b5s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

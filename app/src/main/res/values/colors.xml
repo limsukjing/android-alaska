@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FF6347</color>
-    <color name="colorPrimaryDark">#DCDCDC</color>
-    <color name="colorAccent">#F4A460</color>
+    <color name="primary_white">#FFFFFF</color>
+    <color name="primary_black">#000000</color>
+    <color name="primary_blue">#5489F2</color>
+    <color name="pastel_green">#BAF2BB</color>
+    <color name="pastel_teal">#BAF2D8</color>
+    <color name="pastel_blue">#BAD6F2</color>
+    <color name="pastel_pink">#F2BAC9</color>
+    <color name="pastel_yellow">#F2E2BA</color>
+    <color name="pastel_cream">#F2F2F2</color>
+    <color name="icon_launcher_background">#FFFFFF</color>
 </resources>
