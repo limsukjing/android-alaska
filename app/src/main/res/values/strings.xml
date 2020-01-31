@@ -30,4 +30,10 @@
     <string name="message_current_location_error">Invalid location</string>
     <string name="message_api_connection_error">Connection to GoogleApiClient failed.</string>
     <string name="message_api_connection_suspended">Connection to GoogleApiClient suspended.</string>
+    <string name="message_record_denied">Permission to record denied.</string>
+    <string name="message_record_granted">Permission to record granted.</string>
+    <string name="message_tap_voice">Tap on the message to enable TTS service.</string>
+    <string name="message_chat_error">Unhandled message type.</string>
+    <string name="message_listening_started">Listening - click to stop.</string>
+    <string name="message_listening_stopped">Stopped listening.</string>
 </resources>

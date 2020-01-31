@@ -43,7 +43,7 @@ dependencies {
     implementation 'com.github.skydoves:powermenu:2.0.6'
 
     // Firebase Authentication and Firestore
-    implementation 'com.google.firebase:firebase-firestore:21.3.0'
+    implementation 'com.google.firebase:firebase-firestore:21.3.1'
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
 
@@ -52,6 +52,17 @@ dependencies {
 
     // Twitter
     implementation 'com.twitter.sdk.android:twitter-core:3.3.0'
+
+    // IBM Watson
+    implementation 'com.ibm.watson:assistant:8.1.0'
+    implementation 'com.ibm.watson:text-to-speech:8.1.0'
+    implementation 'com.ibm.watson:speech-to-text:8.1.0'
+    implementation 'com.ibm.watson.developer_cloud:android-sdk:0.5.0'
+
+    // Glide
+    implementation ('com.github.bumptech.glide:glide:4.9.0') {
+        exclude group: "com.android.support"
+    }
 
     // junit test
     testImplementation 'junit:junit:4.12'

@@ -12,25 +12,15 @@
     <string name="twitter_consumer_secret" translatable="false">9C1CAf9OShgjJEJJef22boOq7Ev4UdToOGoJZMplQKvF7cs2JX</string>
 
     <!--Watson Assistant service credentials-->
-    <string name="assistant_id">3cbb9a5a&#8211;b7cc&#8211;4f8a&#8211;83b1&#8211;2d3a392474bd</string>
-    <string name="assistant_apikey">i1vQB8JxltTBKhJkXFAbXH_niA0i3c6RluTTkLd-gSqF</string>
-    <string name="assistant_url">https://gateway&#8211;lon.watsonplatform.net/assistant/api/v2/assistants/3cbb9a5a&#8211;b7cc&#8211;4f8a&#8211;83b1&#8211;2d3a392474bd/sessions</string>
+    <string name="assistant_id">2ccb1908-f2f5-4d6c-86d4-817dfc480097</string>
+    <string name="assistant_apikey">cSBgz_zGHskcU1e3-Q4O-HrnO_vMz44QDfnl28uSVDTB</string>
+    <string name="assistant_url">https://api.eu-gb.assistant.watson.cloud.ibm.com/instances/24adcd07-67cf-43b1-9631-6b6eaa8cf920</string>
 
-    <!--Watson Speech To Text(STT) service credentials-->
-    <!-- REPLACE `STT_API_KEY_HERE` with Watson Speech to Text service API Key-->
-    <string name="STT_apikey">STT_API_KEY_HERE</string>
+    <!--Watson Speech To Text service credentials-->
+    <string name="STT_apikey">-zjJ1Kjq-6n3KKIP_HY9QexUcrWok1zeUKTG3ClTXwEI</string>
+    <string name="STT_url">https://api.eu-gb.speech-to-text.watson.cloud.ibm.com/instances/b8e78644-b917-4296-88ce-86f6e5b0d0dc</string>
 
-    <!-- The URL provided below is for DALLAS region/location -->
-    <!-- If the STT service is created in another region/lpcation -->
-    <!-- REPLACE the URL with STT URL provided in the service credentials -->
-    <string name="STT_url">https://stream.watsonplatform.net/speech-to-text/api</string>
-
-    <!--Watson Text To Speech(TTS) service credentials-->
-    <!-- REPLACE `TTS_API_KEY_HERE` with Watson Text to Speech service API Key-->
-    <string name="TTS_apikey">TTS_API_KEY_HERE</string>
-
-    <!-- The URL provided below is for DALLAS region/location -->
-    <!-- If the TTS service is created in another region/lpcation -->
-    <!-- REPLACE the URL with TTS URL provided in the service credentials -->
-    <string name="TTS_url">https://stream.watsonplatform.net/text-to-speech/api</string>
+    <!--Watson Text To Speech service credentials-->
+    <string name="TTS_apikey">dpolhddxcltS7TeiE9OZxGygqP4kdoLPqS15K5WhKXUn</string>
+    <string name="TTS_url">https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/instances/d4f11012-874a-4ec6-942f-b0c6c8c69f97</string>
 </resources>

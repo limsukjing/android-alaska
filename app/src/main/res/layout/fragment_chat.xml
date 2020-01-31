@@ -9,7 +9,6 @@
         android:id="@+id/recycler_view_chat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
         android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
@@ -35,7 +34,7 @@
             android:src="@drawable/icon_mic" />
 
         <EditText
-            android:id="@+id/edit_text_chat"
+            android:id="@+id/edit_text_input"
             android:layout_width="0dp"
             android:textSize="@dimen/font_title"
             android:layout_height="60dp"
