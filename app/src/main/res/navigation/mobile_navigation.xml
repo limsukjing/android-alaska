@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="ie.tudublin.alaska.activities.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:name="ie.tudublin.alaska.activities.journal.JournalFragment"
+        android:label="@string/title_journal"
+        tools:layout="@layout/fragment_journal" />
 
     <fragment
         android:id="@+id/navigation_chat"

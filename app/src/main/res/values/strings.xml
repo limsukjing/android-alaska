@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">Alaska</string>
-    <string name="title_fragment_maps">Map</string>
 
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_journal">Journal</string>
     <string name="title_chat">Chat</string>
     <string name="title_discover">Discover</string>
     <string name="title_profile">Profile</string>
@@ -10,16 +9,31 @@
     <string name="title_username">Username</string>
     <string name="title_email">Email</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_fragment_maps">Map</string>
 
+    <string name="prompt_lorem_ipsum">Lorem ipsum dolor sit amet, soluta regione urbanitas vis in, qui elit populo ut.</string>
     <string name="prompt_podcast">Listen to Podcasts / Playlists</string>
     <string name="prompt_map">Find Nearby Hospitals</string>
     <string name="prompt_current_location">Current Location</string>
     <string name="prompt_user_input">Please enter your query here</string>
+    <string name="prompt_add_journal">NO ENTRIES \n Add them now!</string>
+    <string name="prompt_journal_date">dd/MM/yyyy</string>
+    <string name="prompt_journal_intro">HOW ARE YOU FEELING?</string>
+    <string name="prompt_journal_mood">Mood</string>
+    <string name="prompt_journal_title">Title</string>
+    <string name="prompt_journal_description">Description</string>
+    <string name="prompt_journal_img">Image</string>
 
     <string name="action_logout">Logout</string>
     <string name="action_delete_account">Delete Account</string>
     <string name="action_confirm">Confirm</string>
     <string name="action_cancel">Cancel</string>
+    <string name="action_add_entry">Add Journal Entry</string>
+    <string name="action_mood_angry">Angry</string>
+    <string name="action_mood_anxious">Anxious</string>
+    <string name="action_mood_joyful">Joyful</string>
+    <string name="action_mood_neutral">Neutral</string>
+    <string name="action_mood_sad">Sad</string>
 
     <string name="message_login_error">Login unsuccessful - please try again later.</string>
     <string name="message_logout_error">Logout unsuccessful - please try again later.</string>
@@ -36,4 +50,11 @@
     <string name="message_chat_error">Unhandled message type.</string>
     <string name="message_listening_started">Listening - click to stop.</string>
     <string name="message_listening_stopped">Stopped listening.</string>
+    <string name="message_date_error">Date selected must not be greater than today\'s date.</string>
+    <string name="message_img_error">Picture cannot be loaded - please try again later.</string>
+    <string name="message_input_empty">Please fill in all required fields.</string>
+    <string name="message_upload_entry_error">Failed to upload entry - please try again later.</string>
+    <string name="message_upload_entry_success">Entry added successfully!</string>
+    <string name="message_upload_img_error">Failed to upload image - please try again later.</string>
+
 </resources>
