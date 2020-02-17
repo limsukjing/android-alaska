@@ -29,7 +29,8 @@ public class Util {
         if (isConnected) {
             return true;
         } else {
-            Toast.makeText(context, R.string.message_network_error, Toast.LENGTH_SHORT).show();
+            String action = context.getResources().getString(R.string.message_error, "Network error");
+            Toast.makeText(context, action, Toast.LENGTH_SHORT).show();
             return false;
         }
     }

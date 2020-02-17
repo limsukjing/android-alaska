@@ -49,14 +49,15 @@ public class ProfileFragment extends Fragment {
         final ConnectivityManager manager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         final NetworkInfo info = manager.getActiveNetworkInfo();
 
-        profileViewModel.getUserData().observe(this, (@Nullable User user) -> {
+        profileViewModel.getUserData().observe(getViewLifecycleOwner(), (@Nullable User user) -> {
             emailTextView.setText(user.getEmail());
             usernameTextView.setText(user.getUsername());
 
             if(info != null && info.isConnected()) {
                 new DownloadImageAsyncTask().execute(user.getPhotoURL());
             } else {
-                Toast.makeText(getActivity(), R.string.message_network_error, Toast.LENGTH_SHORT).show();
+                String action = getContext().getResources().getString(R.string.message_error, "Network error");
+                Toast.makeText(getContext(), action, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -93,8 +94,8 @@ public class ProfileFragment extends Fragment {
                 firebaseAuthDelete();
                 break;
             default:
-                Toast.makeText(getActivity(), R.string.message_unknown_error, Toast.LENGTH_SHORT).show();
-
+                String action = getContext().getResources().getString(R.string.message_error, "An error");
+                Toast.makeText(getContext(), action, Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -109,7 +110,8 @@ public class ProfileFragment extends Fragment {
                         Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(loginIntent);
                     } else {
-                        Toast.makeText(getActivity(), R.string.message_login_error, Toast.LENGTH_SHORT).show();
+                        String action = getContext().getResources().getString(R.string.message_action_failure, "login");
+                        Toast.makeText(getActivity(), action, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -126,7 +128,8 @@ public class ProfileFragment extends Fragment {
                         Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(loginIntent);
                     } else {
-                        Toast.makeText(getActivity(), R.string.message_login_error, Toast.LENGTH_SHORT).show();
+                        String action = getContext().getResources().getString(R.string.message_action_failure, "login");
+                        Toast.makeText(getActivity(), action, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -153,7 +156,8 @@ public class ProfileFragment extends Fragment {
                     avatarImageView.setImageDrawable(drawable);
                 }
             } else {
-                Toast.makeText(getActivity(), R.string.message_avatar_error, Toast.LENGTH_SHORT).show();
+                String action = getActivity().getResources().getString(R.string.message_action_failure, "display profile image");
+                Toast.makeText(getActivity(), action, Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -5,16 +5,13 @@
     <string name="title_chat">Chat</string>
     <string name="title_discover">Discover</string>
     <string name="title_profile">Profile</string>
-    <string name="title_avatar">Avatar</string>
     <string name="title_username">Username</string>
     <string name="title_email">Email</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="title_fragment_maps">Map</string>
+    <string name="title_mood_img_url">mood/mood_%s.png</string>
 
     <string name="prompt_lorem_ipsum">Lorem ipsum dolor sit amet, soluta regione urbanitas vis in, qui elit populo ut.</string>
     <string name="prompt_podcast">Listen to Podcasts / Playlists</string>
     <string name="prompt_map">Find Nearby Hospitals</string>
-    <string name="prompt_current_location">Current Location</string>
     <string name="prompt_user_input">Please enter your query here</string>
     <string name="prompt_add_journal">NO ENTRIES \n Add them now!</string>
     <string name="prompt_journal_date">dd/MM/yyyy</string>
@@ -26,35 +23,23 @@
 
     <string name="action_logout">Logout</string>
     <string name="action_delete_account">Delete Account</string>
-    <string name="action_confirm">Confirm</string>
-    <string name="action_cancel">Cancel</string>
     <string name="action_add_entry">Add Journal Entry</string>
+    <string name="action_edit_entry">Edit Entry</string>
+    <string name="action_delete_entry">Delete Entry</string>
     <string name="action_mood_angry">Angry</string>
     <string name="action_mood_anxious">Anxious</string>
     <string name="action_mood_joyful">Joyful</string>
     <string name="action_mood_neutral">Neutral</string>
     <string name="action_mood_sad">Sad</string>
 
-    <string name="message_login_error">Login unsuccessful - please try again later.</string>
-    <string name="message_logout_error">Logout unsuccessful - please try again later.</string>
-    <string name="message_removal_error">Failed to delete account - please try again later.</string>
-    <string name="message_network_error">Network error - please try again later.</string>
-    <string name="message_unknown_error">An error has occurred - please try again later.</string>
-    <string name="message_avatar_error">Profile picture cannot be displayed - please refresh.</string>
-    <string name="message_current_location_error">Invalid location</string>
-    <string name="message_api_connection_error">Connection to GoogleApiClient failed.</string>
-    <string name="message_api_connection_suspended">Connection to GoogleApiClient suspended.</string>
-    <string name="message_record_denied">Permission to record denied.</string>
-    <string name="message_record_granted">Permission to record granted.</string>
+    <string name="message_permission_denied">Permission to %s denied.</string>
+    <string name="message_permission_granted">Permission to %s granted.</string>
+    <string name="message_error">%s has occurred - please try again later.</string>
+    <string name="message_action_failure">Failed to %s - please try again later.</string>
+    <string name="message_action_success">%s successfully!</string>
     <string name="message_tap_voice">Tap on the message to enable TTS service.</string>
     <string name="message_chat_error">Unhandled message type.</string>
     <string name="message_listening_started">Listening - click to stop.</string>
     <string name="message_listening_stopped">Stopped listening.</string>
-    <string name="message_date_error">Date selected must not be greater than today\'s date.</string>
-    <string name="message_img_error">Picture cannot be loaded - please try again later.</string>
     <string name="message_input_empty">Please fill in all required fields.</string>
-    <string name="message_upload_entry_error">Failed to upload entry - please try again later.</string>
-    <string name="message_upload_entry_success">Entry added successfully!</string>
-    <string name="message_upload_img_error">Failed to upload image - please try again later.</string>
-
 </resources>

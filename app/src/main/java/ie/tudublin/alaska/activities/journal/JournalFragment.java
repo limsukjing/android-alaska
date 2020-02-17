@@ -21,10 +21,8 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -32,10 +30,14 @@ import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -46,14 +48,22 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import ie.tudublin.alaska.R;
+import ie.tudublin.alaska.adapter.JournalAdapter;
 import ie.tudublin.alaska.helper.Util;
+import ie.tudublin.alaska.model.JournalEntry;
 
 public class JournalFragment extends Fragment implements View.OnClickListener {
 
     private static final int EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 123;
 
+    private View root;
     private JournalViewModel journalViewModel;
+    private RecyclerView journalListView;
+    private List<JournalEntry> entryList;
+    private JournalAdapter journalAdapter;
 
     private FloatingActionButton addButton;
     private Button postButton;
@@ -71,17 +81,16 @@ public class JournalFragment extends Fragment implements View.OnClickListener {
 
     private StorageReference mStorageRef;
     private FirebaseFirestore mFirestore;
-    private DocumentReference docRef;
     private FirebaseUser currentUser;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        journalViewModel = new ViewModelProvider(this).get(JournalViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_journal, container, false);
+        root = inflater.inflate(R.layout.fragment_journal, container, false);
 
         // retrieve view objects and add a click listener
         addButton = root.findViewById(R.id.journal_fab);
         journalEmptyLayout = root.findViewById(R.id.journal_empty_layout);
+        journalListView = root.findViewById(R.id.journal_list_view);
         addButton.setOnClickListener(this);
 
         // initialize Firebase Storage and Firestore
@@ -90,11 +99,20 @@ public class JournalFragment extends Fragment implements View.OnClickListener {
         mFirestore = FirebaseFirestore.getInstance();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
+        // set adapter to list view
+        entryList = new ArrayList<>();
+        journalAdapter = new JournalAdapter(entryList);
+        journalListView.setAdapter(journalAdapter);
+        journalListView.setLayoutManager(new LinearLayoutManager(container.getContext()));
+        journalListView.setLayoutManager(new LinearLayoutManager(container.getContext()));
+        journalListView.setHasFixedSize(true);
+
+        // retrieve data from Firestore
+        journalViewModel = new ViewModelProvider(this).get(JournalViewModel.class);
         checkJournalCollection();
 
         return root;
     }
-
 
     /**
      * retrieve view objects and call setOnClickListener()
@@ -209,7 +227,8 @@ public class JournalFragment extends Fragment implements View.OnClickListener {
                 imageUri = result.getUri();
                 imgView.setImageURI(imageUri);
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Toast.makeText(getContext(), R.string.message_img_error, Toast.LENGTH_SHORT).show();
+                String action = getActivity().getResources().getString(R.string.message_action_failure, "load image");
+                Toast.makeText(getActivity(), action, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -231,7 +250,8 @@ public class JournalFragment extends Fragment implements View.OnClickListener {
 
         uploadImgTask.continueWithTask(task -> {
             if (!task.isSuccessful()) {
-                Toast.makeText(getContext(), R.string.message_upload_img_error, Toast.LENGTH_LONG).show();
+                String action = getContext().getResources().getString(R.string.message_action_failure, "upload image");
+                Toast.makeText(getContext(), action, Toast.LENGTH_SHORT).show();
             }
 
             // Continue with the task to get the download URL
@@ -240,23 +260,36 @@ public class JournalFragment extends Fragment implements View.OnClickListener {
             if (task.isSuccessful()) {
                 String downloadUri = Objects.requireNonNull(task.getResult()).toString();
 
+                date = date + new SimpleDateFormat(" HH:mm:ss", Locale.getDefault()).format(new Date());
+                DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+                Date dateTime = null;
+                try {
+                    dateTime = formatter.parse(date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
                 Map<String, Object> data = new HashMap<>();
-                data.put("date", date + new SimpleDateFormat(" HH:mm:ss", Locale.getDefault()).format(new Date()));
                 data.put("mood", mood);
                 data.put("title", title);
-                data.put("desc", desc);
-                data.put("image_url", downloadUri);
+                data.put("date", date);
+                data.put("imageURL", downloadUri);
+                data.put("description", desc);
+                data.put("timestamp", dateTime.getTime());
 
                 mFirestore.collection("users").document(currentUser.getUid()).collection("journal").document()
                         .set(data)
                         .addOnSuccessListener(aVoid -> {
-                            Toast.makeText(getContext(), R.string.message_upload_entry_success, Toast.LENGTH_LONG).show();
+                            String action = getContext().getResources().getString(R.string.message_action_success, "Entry added");
+                            Toast.makeText(getContext(), action, Toast.LENGTH_SHORT).show();
 
-                            // Hide bottom sheet dialog
+                            dialog.dismiss(); // hid bottom sheet dialog
                             checkJournalCollection();
-                            dialog.dismiss();
                         })
-                        .addOnFailureListener(e -> Toast.makeText(getContext(), R.string.message_upload_entry_error, Toast.LENGTH_LONG).show());
+                        .addOnFailureListener(e -> {
+                            String action = getContext().getResources().getString(R.string.message_action_failure, "upload entry");
+                            Toast.makeText(getContext(), action, Toast.LENGTH_SHORT).show();
+                        });
             }
         });
     }
@@ -270,9 +303,13 @@ public class JournalFragment extends Fragment implements View.OnClickListener {
                 int size = Objects.requireNonNull(task.getResult()).size();
 
                 if (size == 0) journalEmptyLayout.setVisibility(View.VISIBLE);
-                else journalEmptyLayout.setVisibility(View.INVISIBLE);
+                else {
+                    journalEmptyLayout.setVisibility(View.INVISIBLE);
+                    journalViewModel.retrieveEntryData(root, getActivity(), entryList, journalAdapter);
+                }
             } else {
-                Toast.makeText(getContext(), R.string.message_unknown_error, Toast.LENGTH_SHORT).show();
+                String action = getContext().getResources().getString(R.string.message_error, "An error");
+                Toast.makeText(getContext(), action, Toast.LENGTH_SHORT).show();
             }
         });
     }

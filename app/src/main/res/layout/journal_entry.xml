@@ -5,14 +5,13 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/journal_card"
+        android:id="@+id/entry_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +22,7 @@
             android:layout_height="wrap_content">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/journal_mood_img"
+                android:id="@+id/entry_mood_img"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_marginStart="16dp"
@@ -33,51 +32,52 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/journal_title_text"
+                android:id="@+id/entry_title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/prompt_journal_title"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/journal_mood_img"
+                app:layout_constraintStart_toEndOf="@+id/entry_mood_img"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/journal_date_text"
+                android:id="@+id/entry_date_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:text="@string/prompt_journal_date"
-                app:layout_constraintStart_toEndOf="@+id/journal_mood_img"
-                app:layout_constraintTop_toBottomOf="@+id/journal_title_text" />
+                app:layout_constraintStart_toEndOf="@+id/entry_mood_img"
+                app:layout_constraintTop_toBottomOf="@+id/entry_title_text" />
 
             <ImageView
-                android:id="@+id/journal_img"
+                android:id="@+id/entry_img_view"
                 android:layout_width="0dp"
                 android:layout_height="200dp"
                 android:layout_marginTop="16dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/journal_mood_img"
+                app:layout_constraintTop_toBottomOf="@+id/entry_mood_img"
                 app:srcCompat="@color/tw__light_gray" />
 
             <TextView
-                android:id="@+id/journal_content_text"
+                android:id="@+id/entry_description_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:paddingBottom="16dp"
+                android:maxLines="10"
                 android:text="@string/prompt_lorem_ipsum"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/journal_img" />
+                app:layout_constraintTop_toBottomOf="@+id/entry_img_view" />
 
             <ImageButton
-                android:id="@+id/button_settings"
+                android:id="@+id/entry_settings_btn"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:adjustViewBounds="false"
@@ -88,10 +88,8 @@
                 app:layout_constraintHorizontal_bias="0.957"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.062" />
+                app:layout_constraintVertical_bias="0.090" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

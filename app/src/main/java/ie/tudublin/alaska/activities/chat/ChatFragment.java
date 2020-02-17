@@ -78,6 +78,8 @@ public class ChatFragment extends Fragment {
     private SpeechToText watsonSTT;
     private TextToSpeech watsonTTS;
 
+    private String permissionDenied, permissionGranted;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_chat, container, false);
 
@@ -100,6 +102,9 @@ public class ChatFragment extends Fragment {
         chatRecyclerView.setAdapter(mAdapter);
         this.inputEditText.setText("");
         this.initialRequest = true;
+
+        permissionDenied = mContext.getResources().getString(R.string.message_permission_denied,"record");
+        permissionGranted = mContext.getResources().getString(R.string.message_permission_granted,"record");
 
         if(util.isNetworkAvailable(mContext)) {
             chatRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, chatRecyclerView, new ClickListener() {
@@ -126,7 +131,8 @@ public class ChatFragment extends Fragment {
             createServices();
             sendMessage();
         } else {
-            Toast.makeText(mContext, R.string.message_network_error, Toast.LENGTH_SHORT).show();
+            String action = mContext.getResources().getString(R.string.message_error, "Network error");
+            Toast.makeText(mContext, action, Toast.LENGTH_SHORT).show();
         }
 
         return root;
@@ -141,10 +147,11 @@ public class ChatFragment extends Fragment {
         int permission = ContextCompat.checkSelfPermission(mContext, Manifest.permission.RECORD_AUDIO);
 
         if(permission != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(mContext, R.string.message_record_denied, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, permissionDenied, Toast.LENGTH_SHORT).show();
+
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.RECORD_AUDIO}, MicrophoneHelper.REQUEST_PERMISSION);
         } else {
-            Toast.makeText(mContext, R.string.message_record_granted, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, permissionGranted, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -160,16 +167,16 @@ public class ChatFragment extends Fragment {
                 break;
             case RECORD_REQUEST_CODE: {
                 if(grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(mContext, R.string.message_record_denied, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, permissionDenied, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(mContext, R.string.message_record_granted, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, permissionGranted, Toast.LENGTH_SHORT).show();
                 }
 
                 return;
             }
             case MicrophoneHelper.REQUEST_PERMISSION: {
                 if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(mContext, R.string.message_record_denied, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, permissionDenied, Toast.LENGTH_SHORT).show();
                 }
             }
         }

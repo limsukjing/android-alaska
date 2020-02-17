@@ -84,7 +84,8 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
                     break;
             }
         } else {
-            Toast.makeText(getContext(), R.string.message_network_error, Toast.LENGTH_SHORT).show();
+            String action = getContext().getResources().getString(R.string.message_error, "Network error");
+            Toast.makeText(getContext(), action, Toast.LENGTH_SHORT).show();
         }
     }
 }
