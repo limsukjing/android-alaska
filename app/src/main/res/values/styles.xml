@@ -6,4 +6,12 @@
         <item name="colorSecondary">@color/pastel_green</item>
         <item name="colorAccent">@color/colorPrimaryDark</item>
     </style>
+
+    <style name="LoginTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary_blue</item>
+        <item name="colorSecondary">@color/pastel_green</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="android:colorBackground">@color/primary_white</item>
+        <item name="android:layout_marginHorizontal">1dp</item>
+    </style>
 </resources>

@@ -186,13 +186,13 @@ public class ChatFragment extends Fragment {
      * connects to Watson services i.e. Assistant, TTS and STT
      */
     private void createServices() {
-        watsonAssistant = new Assistant("2019-02-28", new IamAuthenticator(mContext.getString(R.string.assistant_apikey)));
+        watsonAssistant = new Assistant("2019-02-28", new IamAuthenticator(mContext.getString(R.string.assistant_api_key)));
         watsonAssistant.setServiceUrl(mContext.getString(R.string.assistant_url));
 
-        watsonTTS = new TextToSpeech(new IamAuthenticator((mContext.getString(R.string.TTS_apikey))));
+        watsonTTS = new TextToSpeech(new IamAuthenticator((mContext.getString(R.string.TTS_api_key))));
         watsonTTS.setServiceUrl(mContext.getString(R.string.TTS_url));
 
-        watsonSTT = new SpeechToText(new IamAuthenticator(mContext.getString(R.string.STT_apikey)));
+        watsonSTT = new SpeechToText(new IamAuthenticator(mContext.getString(R.string.STT_api_key)));
         watsonSTT.setServiceUrl(mContext.getString(R.string.STT_url));
     }
 

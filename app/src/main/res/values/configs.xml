@@ -8,19 +8,24 @@
     <string name="fb_login_protocol_scheme">fb2754246241292665</string>
 
     <!--Twitter SDK credentials-->
-    <string name="twitter_consumer_key" translatable="false">qiMgY3Fd0n2zaF38ShVbTxElp</string>
-    <string name="twitter_consumer_secret" translatable="false">9C1CAf9OShgjJEJJef22boOq7Ev4UdToOGoJZMplQKvF7cs2JX</string>
+    <string name="twitter_consumer_key" translatable="false">xfn0nzolitkg4mrbAYHe81JJh</string>
+    <string name="twitter_consumer_secret" translatable="false">GcTf6oCj9WHXS825rK96T05SUd8JzI5voR7PVja1oal5njFn14</string>
+    <string name="twitter_access_token">AAAAAAAAAAAAAAAAAAAAAHnpBAEAAAAAKP%2FHlBdVfAslpj%2Bhkv7ZPkuSQfI%3Dc4HGaQImqvwiPc89hvW6TX4m1lSEkw1h7oKYphbFNKhPZmvJzn</string>
 
     <!--Watson Assistant service credentials-->
     <string name="assistant_id">2ccb1908-f2f5-4d6c-86d4-817dfc480097</string>
-    <string name="assistant_apikey">cSBgz_zGHskcU1e3-Q4O-HrnO_vMz44QDfnl28uSVDTB</string>
+    <string name="assistant_api_key">cSBgz_zGHskcU1e3-Q4O-HrnO_vMz44QDfnl28uSVDTB</string>
     <string name="assistant_url">https://api.eu-gb.assistant.watson.cloud.ibm.com/instances/24adcd07-67cf-43b1-9631-6b6eaa8cf920</string>
 
     <!--Watson Speech To Text service credentials-->
-    <string name="STT_apikey">-zjJ1Kjq-6n3KKIP_HY9QexUcrWok1zeUKTG3ClTXwEI</string>
+    <string name="STT_api_key">-zjJ1Kjq-6n3KKIP_HY9QexUcrWok1zeUKTG3ClTXwEI</string>
     <string name="STT_url">https://api.eu-gb.speech-to-text.watson.cloud.ibm.com/instances/b8e78644-b917-4296-88ce-86f6e5b0d0dc</string>
 
     <!--Watson Text To Speech service credentials-->
-    <string name="TTS_apikey">dpolhddxcltS7TeiE9OZxGygqP4kdoLPqS15K5WhKXUn</string>
+    <string name="TTS_api_key">dpolhddxcltS7TeiE9OZxGygqP4kdoLPqS15K5WhKXUn</string>
     <string name="TTS_url">https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/instances/d4f11012-874a-4ec6-942f-b0c6c8c69f97</string>
+
+    <!--Watson Tone Analyzer service credentials-->
+    <string name="analyzer_api_key">NSSws3aLPnSljlcHlFteWdn9kr9RZHu6kKqKe-EJOKfD</string>
+    <string name="analyzer_url">https://api.eu-gb.tone-analyzer.watson.cloud.ibm.com/instances/cdbe0c05-9699-4093-bcf3-0499fc6232ca</string>
 </resources>

@@ -3,6 +3,7 @@ package ie.tudublin.alaska.activities.authentication;
 import androidx.appcompat.app.AppCompatActivity;
 import ie.tudublin.alaska.R;
 import ie.tudublin.alaska.activities.MainActivity;
+import ie.tudublin.alaska.helper.Util;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_LOGIN = 1234;
 
     private FirebaseAuth mAuth;
+    private Util util;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +28,17 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+        util = new Util();
 
-        // user login status
-        if(mAuth.getCurrentUser() != null) {
-            Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(mainIntent);
-        } else {
-            firebaseAuthLogin();
+        // verify network connectivity
+        if(util.isNetworkAvailable(getApplicationContext())) {
+            // user login status
+            if(mAuth.getCurrentUser() != null) {
+                Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(mainIntent);
+            } else {
+                firebaseAuthLogin();
+            }
         }
     }
 
@@ -44,8 +50,8 @@ public class LoginActivity extends AppCompatActivity {
         startActivityForResult(AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setAvailableProviders(getProvider())
-                .setLogo(R.drawable.logo)
-                .setTheme(R.style.AppTheme)
+                .setLogo(R.drawable.logo_login)
+                .setTheme(R.style.LoginTheme)
                 .setIsSmartLockEnabled(false)
                 .setTosAndPrivacyPolicyUrls(
                         "https://www.freeprivacypolicy.com/privacy/view/3ccea0b97b785480095259db0c31569d",

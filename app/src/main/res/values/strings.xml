@@ -8,6 +8,8 @@
     <string name="title_username">Username</string>
     <string name="title_email">Email</string>
     <string name="title_mood_img_url">mood/mood_%s.png</string>
+    <string name="title_tone_img_url">tone/tone_%s.png</string>
+    <string name="title_twitter">Twitter Sentiment Analysis</string>
 
     <string name="prompt_lorem_ipsum">Lorem ipsum dolor sit amet, soluta regione urbanitas vis in, qui elit populo ut.</string>
     <string name="prompt_podcast">Listen to Podcasts / Playlists</string>
@@ -20,6 +22,9 @@
     <string name="prompt_journal_title">Title</string>
     <string name="prompt_journal_description">Description</string>
     <string name="prompt_journal_img">Image</string>
+    <string name="prompt_twitter">Analyze your tweets and classify them into the following emotions: Anger, Fear, Joy, Sadness, Analytical, Confident and Tentative.</string>
+    <string name="prompt_twitter_username">TWITTER USERNAME</string>
+    <string name="prompt_twitter_mood">EMOTION DETECTED: %s</string>
 
     <string name="action_logout">Logout</string>
     <string name="action_delete_account">Delete Account</string>
@@ -31,15 +36,19 @@
     <string name="action_mood_joyful">Joyful</string>
     <string name="action_mood_neutral">Neutral</string>
     <string name="action_mood_sad">Sad</string>
+    <string name="action_twitter_connect">Connect To Twitter</string>
+    <string name="action_twitter_analyze">Analyze Your Tweets</string>
 
     <string name="message_permission_denied">Permission to %s denied.</string>
     <string name="message_permission_granted">Permission to %s granted.</string>
     <string name="message_error">%s has occurred - please try again later.</string>
     <string name="message_action_failure">Failed to %s - please try again later.</string>
     <string name="message_action_success">%s successfully!</string>
+    <string name="message_authentication_error">Failed to authenticate user - please login.</string>
     <string name="message_tap_voice">Tap on the message to enable TTS service.</string>
     <string name="message_chat_error">Unhandled message type.</string>
     <string name="message_listening_started">Listening - click to stop.</string>
     <string name="message_listening_stopped">Stopped listening.</string>
     <string name="message_input_empty">Please fill in all required fields.</string>
+    <string name="message_tweet_empty">Sorry, user has not tweeted anything yet.</string>
 </resources>
