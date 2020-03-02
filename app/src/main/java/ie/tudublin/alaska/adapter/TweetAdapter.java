@@ -114,6 +114,7 @@ public class TweetAdapter extends BaseAdapter {
         if (data == null || data.isEmpty() || data.equals("null")) {
             return "N/A";
         } else if (!Arrays.asList(tones).contains(data)) {
+            data = "neutral";
             imgPath = mActivity.getResources().getString(R.string.title_tone_img_url, "neutral");
         } else {
             imgPath = mActivity.getResources().getString(R.string.title_tone_img_url, data);
