@@ -10,10 +10,11 @@
     <string name="title_mood_img_url">mood/mood_%s.png</string>
     <string name="title_tone_img_url">tone/tone_%s.png</string>
     <string name="title_twitter">Twitter Sentiment Analysis</string>
+    <string name="title_podcast">Podcast</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_location">Location</string>
 
     <string name="prompt_lorem_ipsum">Lorem ipsum dolor sit amet, soluta regione urbanitas vis in, qui elit populo ut.</string>
-    <string name="prompt_podcast">Listen to Podcasts / Playlists</string>
-    <string name="prompt_map">Find Nearby Hospitals</string>
     <string name="prompt_user_input">Please enter your query here</string>
     <string name="prompt_add_journal">NO ENTRIES \n Add them now!</string>
     <string name="prompt_journal_date">dd/MM/yyyy</string>
@@ -25,6 +26,12 @@
     <string name="prompt_twitter">Analyze your tweets and classify them into the following emotions: Anger, Fear, Joy, Sadness, Analytical, Confident and Tentative.</string>
     <string name="prompt_twitter_username">TWITTER USERNAME</string>
     <string name="prompt_twitter_mood">EMOTION DETECTED: %s</string>
+    <string name="prompt_podcast">Podcasts/Playlist Recommendation</string>
+    <string name="prompt_spotify">Need a distraction? Here are some podcasts and playlists just for you.</string>
+    <string name="prompt_location">Location Detection</string>
+    <string name="prompt_hospital">Click to find your nearest hospital health centre, GP and more.</string>
+    <string name="prompt_navigation">Start navigation to %s, %s?</string>
+    <string name="prompt_location_permission">Need permission to find your nearest hospital, health centre, GP and more.</string>
 
     <string name="action_logout">Logout</string>
     <string name="action_delete_account">Delete Account</string>
@@ -38,6 +45,9 @@
     <string name="action_mood_sad">Sad</string>
     <string name="action_twitter_connect">Connect To Twitter</string>
     <string name="action_twitter_analyze">Analyze Your Tweets</string>
+    <string name="action_understand">OK, I understand</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="action_cancel">Cancel</string>
 
     <string name="message_permission_denied">Permission to %s denied.</string>
     <string name="message_permission_granted">Permission to %s granted.</string>
@@ -51,4 +61,7 @@
     <string name="message_listening_stopped">Stopped listening.</string>
     <string name="message_input_empty">Please fill in all required fields.</string>
     <string name="message_tweet_empty">Sorry, user has not tweeted anything yet.</string>
+    <string name="message_location_error">Invalid location.</string>
+    <string name="message_location_empty">Please select a different address.</string>
+    <string name="message_hospital_empty">No nearby hospitals.</string>
 </resources>

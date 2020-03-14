@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -239,6 +240,7 @@ public class ChatFragment extends Fragment {
 
                 if(response != null && response.getResult().getOutput() != null && !response.getResult().getOutput().getGeneric().isEmpty()) {
                     List<RuntimeResponseGeneric> responses = response.getResult().getOutput().getGeneric();
+                    Log.d("HELLO", responses.toString());
 
                     for(RuntimeResponseGeneric r : responses) {
                         Message outMessage;

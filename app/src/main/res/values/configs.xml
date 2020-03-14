@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--Maps SDK credentials-->
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBeXHmE5S6iOPBITCbfiaLKWcD_2Eqs8Uw</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyAxn_TC6TleKPJes0bO3GAdtBL0tnvfDOY</string>
 
     <!--Facebook SDK credentials-->
     <string name="facebook_application_id">2754246241292665</string>

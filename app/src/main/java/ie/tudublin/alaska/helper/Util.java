@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -19,13 +20,16 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import id.zelory.compressor.Compressor;
 import ie.tudublin.alaska.R;
 
 public class Util {
+
     /**
-     * Use ConnectivityManager to check network connection
+     * Use ConnectivityManager to check network connection.
      */
     public boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -42,6 +46,7 @@ public class Util {
             return false;
         }
     }
+
 
     /**
      * Source: https://github.com/zetbaitsu/Compressor
@@ -68,8 +73,9 @@ public class Util {
         return outputStream.toByteArray();
     }
 
+
     /**
-     * Retrieve the body of a HTTP Request
+     * Retrieve the body of a HTTP Request.
      */
     public String getHttpResponse(HttpRequestBase request) {
         String res = null;
@@ -95,5 +101,44 @@ public class Util {
         }
 
         return res;
+    }
+
+
+    /**
+     * Read data from URL specified.
+     */
+    public String downloadUrl(String url) throws IOException {
+        String data = "";
+        InputStream inputStream = null;
+        HttpURLConnection urlConnection = null;
+
+        try {
+            URL mUrl = new URL(url);
+
+            // establish HTTP connection
+            urlConnection = (HttpURLConnection) mUrl.openConnection();
+            urlConnection.connect();
+
+            inputStream = urlConnection.getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuilder sb = new StringBuilder();
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+            data = sb.toString();
+            br.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+                urlConnection.disconnect();
+            }
+        }
+
+        return data;
     }
 }
