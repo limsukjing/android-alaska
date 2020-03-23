@@ -38,6 +38,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import ie.tudublin.alaska.R;
 import ie.tudublin.alaska.activities.authentication.LoginActivity;
 import ie.tudublin.alaska.adapter.TweetAdapter;

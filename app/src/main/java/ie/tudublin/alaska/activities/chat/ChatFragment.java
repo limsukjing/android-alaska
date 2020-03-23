@@ -1,10 +1,15 @@
 package ie.tudublin.alaska.activities.chat;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,11 +44,15 @@ import com.ibm.watson.text_to_speech.v1.model.SynthesizeOptions;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import androidx.core.provider.FontRequest;
+import androidx.emoji.text.EmojiCompat;
+import androidx.emoji.text.FontRequestEmojiCompatConfig;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -56,8 +65,10 @@ import ie.tudublin.alaska.model.Message;
 
 public class ChatFragment extends Fragment {
 
-    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
-    private static final int RECORD_REQUEST_CODE = 101;
+    private static final int AUDIO_PERMISSION_REQUEST_CODE = 123;
+
+    private SharedPreferences mSharedPreferences;
+    private String sharedPrefFile = "ie.tudublin.alaska.sharedPrefFile";
 
     private ChatAdapter mAdapter;
     private ArrayList<Message> messageArrayList;
@@ -66,8 +77,7 @@ public class ChatFragment extends Fragment {
 
     private RecyclerView chatRecyclerView;
     private EditText inputEditText;
-    private ImageButton sendBtn;
-    private ImageButton micBtn;
+    private ImageButton sendBtn, micBtn;
 
     private boolean initialRequest;
     private boolean listening = false;
@@ -79,7 +89,7 @@ public class ChatFragment extends Fragment {
     private SpeechToText watsonSTT;
     private TextToSpeech watsonTTS;
 
-    private String permissionDenied, permissionGranted;
+    private String permissionGranted, optionSelected;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_chat, container, false);
@@ -87,13 +97,14 @@ public class ChatFragment extends Fragment {
         mContext = getContext();
         util = new Util();
 
-        chatRecyclerView = root.findViewById(R.id.recycler_view_chat);
-        inputEditText = root.findViewById(R.id.edit_text_input);
-        micBtn = root.findViewById(R.id.btn_mic);
-        sendBtn = root.findViewById(R.id.btn_send);
+        // retrieve view objects
+        chatRecyclerView = root.findViewById(R.id.chat_recycler_view);
+        inputEditText = root.findViewById(R.id.chat_input_edit);
+        micBtn = root.findViewById(R.id.chat_mic_btn);
+        sendBtn = root.findViewById(R.id.chat_send_btn);
 
         messageArrayList = new ArrayList<>();
-        mAdapter = new ChatAdapter(messageArrayList);
+        mAdapter = new ChatAdapter(messageArrayList, getContext());
         microphoneHelper = new MicrophoneHelper(getActivity());
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
@@ -101,34 +112,46 @@ public class ChatFragment extends Fragment {
         chatRecyclerView.setLayoutManager(layoutManager);
         chatRecyclerView.setItemAnimator(new DefaultItemAnimator());
         chatRecyclerView.setAdapter(mAdapter);
+
+        // initialize EmojiCompat
+        FontRequest fontRequest = new FontRequest(
+                "com.google.android.gms.fonts",
+                "com.google.android.gms",
+                "Noto Color Emoji Compat",
+                R.array.com_google_android_gms_fonts_certs);
+        EmojiCompat.Config config = new FontRequestEmojiCompatConfig(mContext, fontRequest);
+        EmojiCompat.init(config);
+
         this.inputEditText.setText("");
         this.initialRequest = true;
 
-        permissionDenied = mContext.getResources().getString(R.string.message_permission_denied,"record");
         permissionGranted = mContext.getResources().getString(R.string.message_permission_granted,"record");
 
         if(util.isNetworkAvailable(mContext)) {
             chatRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, chatRecyclerView, new ClickListener() {
                 @Override
-                public void onClick(View view, final int position) {
+                public void onClick(View view, int position) {
+                    Message message = messageArrayList.get(position);
+
+                    if (message != null && !message.getMessage().isEmpty()) {
+                        handleRedirect(message.getMessage());
+                    }
+                }
+
+                @Override
+                public void onLongClick(View view, int position) {
                     Message audioMessage = messageArrayList.get(position);
 
                     if (audioMessage != null && !audioMessage.getMessage().isEmpty()) {
                         new SpeechAsyncTask().execute(audioMessage.getMessage());
                     }
                 }
-
-                @Override
-                public void onLongClick(View view, int position) {
-                    recordMessage();
-                }
             }));
 
             sendBtn.setOnClickListener(view -> sendMessage());
 
-            micBtn.setOnClickListener(view -> recordMessage());
+            micBtn.setOnClickListener(view -> getRecordAudioPermission());
 
-            checkRecordAudioPermission();
             createServices();
             sendMessage();
         } else {
@@ -144,15 +167,11 @@ public class ChatFragment extends Fragment {
      * the result of the permission request is handled by a callback,
      * onRequestPermissionsResult.
      */
-    private void checkRecordAudioPermission() {
-        int permission = ContextCompat.checkSelfPermission(mContext, Manifest.permission.RECORD_AUDIO);
-
-        if(permission != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(mContext, permissionDenied, Toast.LENGTH_SHORT).show();
-
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.RECORD_AUDIO}, MicrophoneHelper.REQUEST_PERMISSION);
+    private void getRecordAudioPermission() {
+        if(ActivityCompat.checkSelfPermission(mContext, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, AUDIO_PERMISSION_REQUEST_CODE);
         } else {
-            Toast.makeText(mContext, permissionGranted, Toast.LENGTH_SHORT).show();
+            recordMessage();
         }
     }
 
@@ -161,24 +180,28 @@ public class ChatFragment extends Fragment {
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        switch (requestCode) {
-            case REQUEST_RECORD_AUDIO_PERMISSION:
-                break;
-            case RECORD_REQUEST_CODE: {
-                if(grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(mContext, permissionDenied, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(mContext, permissionGranted, Toast.LENGTH_SHORT).show();
-                }
-
-                return;
-            }
-            case MicrophoneHelper.REQUEST_PERMISSION: {
-                if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(mContext, permissionDenied, Toast.LENGTH_SHORT).show();
-                }
+        if (requestCode == AUDIO_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(mContext, permissionGranted, Toast.LENGTH_SHORT).show();
+                recordMessage();
+            } else if ((!ActivityCompat.shouldShowRequestPermissionRationale(Objects.requireNonNull(getActivity()), Manifest.permission.RECORD_AUDIO))) {
+                new AlertDialog.Builder(mContext)
+                        .setTitle(R.string.prompt_audio)
+                        .setMessage(R.string.prompt_audio_permission)
+                        .setPositiveButton(R.string.action_understand, (dialogInterface, i) -> {
+                            Intent settingIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            settingIntent.setData(Uri.fromParts("package", getContext().getPackageName(), null));
+                            startActivity(settingIntent);
+                        })
+                        .create()
+                        .show();
+            } else {
+                new AlertDialog.Builder(mContext)
+                        .setTitle(R.string.prompt_audio)
+                        .setMessage(R.string.prompt_audio_permission)
+                        .setPositiveButton(R.string.action_understand, (dialogInterface, i) -> getRecordAudioPermission())
+                        .create()
+                        .show();
             }
         }
     }
@@ -203,23 +226,37 @@ public class ChatFragment extends Fragment {
      * i.e. texts, options and images
      */
     private void sendMessage() {
-        final String input = this.inputEditText.getText().toString().trim();
+        String input;
+
+        // Get data
+        mSharedPreferences = getActivity().getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE);
+        mSharedPreferences.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> {
+            mSharedPreferences = sharedPreferences;
+            optionSelected = mSharedPreferences.getString(key, "");
+            this.inputEditText.setText(optionSelected);
+        });
+
+        input = this.inputEditText.getText().toString().trim();
 
         if (!this.initialRequest) {
             Message inputMessage = new Message();
             inputMessage.setMessage(input);
-            inputMessage.setId("1");
+            inputMessage.setId("1");  // text message
             messageArrayList.add(inputMessage);
         } else {
             Message inputMessage = new Message();
             inputMessage.setMessage(input);
-            inputMessage.setId("100");
+            inputMessage.setId("100");  // user
             this.initialRequest = false;
             Toast.makeText(mContext, R.string.message_tap_voice, Toast.LENGTH_SHORT).show();
         }
 
-        this.inputEditText.setText("");
         mAdapter.notifyDataSetChanged();
+
+        // clear input and data
+        this.inputEditText.setText("");
+        mSharedPreferences = Objects.requireNonNull(getContext()).getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE);
+        mSharedPreferences.edit().remove("OPTION_SELECTED").apply();
 
         Thread thread = new Thread(() -> {
             try {
@@ -240,33 +277,29 @@ public class ChatFragment extends Fragment {
 
                 if(response != null && response.getResult().getOutput() != null && !response.getResult().getOutput().getGeneric().isEmpty()) {
                     List<RuntimeResponseGeneric> responses = response.getResult().getOutput().getGeneric();
-                    Log.d("HELLO", responses.toString());
+                    Log.d("RESPONSES", responses.toString());
 
-                    for(RuntimeResponseGeneric r : responses) {
+                    for(RuntimeResponseGeneric res : responses) {
                         Message outMessage;
-                        switch (r.responseType()) {
+                        switch (res.responseType()) {
                             case "text":
                                 outMessage = new Message();
-                                outMessage.setMessage(r.text());
+                                outMessage.setMessage(res.text());
                                 outMessage.setId("2");
                                 messageArrayList.add(outMessage);
                                 new SpeechAsyncTask().execute(outMessage.getMessage()); // TTS async task for texts
                                 break;
                             case "option":
-                                outMessage = new Message();
-                                String title = r.title();
-                                String OptionsOutput = "";
-                                for (int i = 0; i < r.options().size(); i++) {
-                                    DialogNodeOutputOptionsElement option = r.options().get(i);
-                                    OptionsOutput = OptionsOutput + option.getLabel() + "\n";
-                                }
-                                outMessage.setMessage(title + "\n" + OptionsOutput);
+                                outMessage = new Message(res, "option");
+                                outMessage.setMessage(res.title() + " " + res.description());
+                                outMessage.setOption(res.options());
                                 outMessage.setId("2");
                                 messageArrayList.add(outMessage);
                                 new SpeechAsyncTask().execute(outMessage.getMessage()); // TTS async task for options
                                 break;
                             case "image":
-                                outMessage = new Message(r);
+                                outMessage = new Message(res, "image");
+                                outMessage.setId("2");
                                 messageArrayList.add(outMessage);
                                 new SpeechAsyncTask().execute("You received an image: " + outMessage.getTitle() + outMessage.getDescription()); // TTS async task for images
                                 break;
@@ -288,6 +321,50 @@ public class ChatFragment extends Fragment {
         });
 
         thread.start();
+    }
+
+    /**
+     * redirects users to a specific page based on the option selected
+     */
+    private void handleRedirect(String text) {
+        boolean profilePage = text.contains("to the Profile page");
+        boolean discoverPage = text.contains("to the Discover page") || text.contains("with the podcasts");
+        boolean journalPage = text.contains("to the Journal page") || text.contains("with the journal entry");
+        boolean sendIntent = text.contains("with the texts");
+        boolean callIntent = text.contains("with the phone call") || text.matches(".* call \\d+\\. Good luck!");
+        boolean urlIntent = text.contains("with the walk") || text.contains("with the workout") || text.contains("with the movie") || text.contains("with the café-hopping") || text.contains("with the volunteering activity");
+
+        if (profilePage) {
+            NavHostFragment.findNavController(this).navigate(R.id.redirect_profile);
+        } else if (discoverPage) {
+            NavHostFragment.findNavController(this).navigate(R.id.redirect_discover);
+        } else if (journalPage) {
+            NavHostFragment.findNavController(this).navigate(R.id.redirect_dashboard);
+        } else if (sendIntent) {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_TEXT, "I have a good news!");
+            intent.setType("text/plain");
+            if (intent.resolveActivity(mContext.getPackageManager()) != null) startActivity(intent);
+        } else if (callIntent) {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            if (intent.resolveActivity(mContext.getPackageManager()) != null) startActivity(intent);
+        } else if (urlIntent) {
+            String url = "";
+            if (text.contains("with the walk")) {
+                url = "https://www.google.com/search?q=weather+forecast&oq=weather+forecast&aqs=chrome..69i57.2269j0j1&sourceid=chrome&ie=UTF-8";
+            } else if (text.contains("with the workout")) {
+                url = "https://www.google.com/maps/search/nearby+gym/@53.4026474,-6.4084278,14z/data=!3m1!4b1";
+            } else if (text.contains("with the movie")) {
+                url = "https://www.odeoncinemas.ie/cinemas/blanchardstown/25/";
+            } else if (text.contains("with the café-hopping")) {
+                url = "https://www.google.com/maps/search/nearby+cafe/@53.4026525,-6.4084278,14z/data=!3m1!4b1";
+            } else if (text.contains("with the volunteering activity")) {
+                url = "https://www.google.com/maps/search/nearby+volunteer+organization/@53.4026256,-6.4609575,12z/data=!3m1!4b1";
+            }
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            if (intent.resolveActivity(mContext.getPackageManager()) != null) startActivity(intent);
+        }
     }
 
     /**
@@ -351,11 +428,11 @@ public class ChatFragment extends Fragment {
         protected String doInBackground(String... params) {
             StreamPlayer streamPlayer = new StreamPlayer();
 
-            streamPlayer.playStream(watsonTTS.synthesize(new SynthesizeOptions.Builder()
-                    .text(params[0])
-                    .voice(SynthesizeOptions.Voice.EN_US_LISAVOICE)
-                    .accept(HttpMediaType.AUDIO_WAV)
-                    .build()).execute().getResult());
+//            streamPlayer.playStream(watsonTTS.synthesize(new SynthesizeOptions.Builder()
+//                    .text(params[0])
+//                    .voice(SynthesizeOptions.Voice.EN_GB_KATEV3VOICE)
+//                    .accept(HttpMediaType.AUDIO_WAV)
+//                    .build()).execute().getResult());
             return "Did synthesize";
         }
     }

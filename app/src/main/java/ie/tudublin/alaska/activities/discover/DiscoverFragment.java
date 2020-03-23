@@ -2,8 +2,11 @@ package ie.tudublin.alaska.activities.discover;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +68,17 @@ public class DiscoverFragment extends Fragment {
                 if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     viewPager.setAdapter(mAdapter);
                 }
+            } else if ((!ActivityCompat.shouldShowRequestPermissionRationale(Objects.requireNonNull(getActivity()), Manifest.permission.ACCESS_FINE_LOCATION))) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle(R.string.prompt_location)
+                        .setMessage(R.string.prompt_location_permission)
+                        .setPositiveButton(R.string.action_understand, (dialogInterface, i) -> {
+                            Intent settingIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            settingIntent.setData(Uri.fromParts("package", getContext().getPackageName(), null));
+                            startActivity(settingIntent);
+                        })
+                        .create()
+                        .show();
             } else {
                 new AlertDialog.Builder(getContext())
                         .setTitle(R.string.prompt_location)

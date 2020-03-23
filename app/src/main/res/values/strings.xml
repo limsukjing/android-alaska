@@ -32,6 +32,8 @@
     <string name="prompt_hospital">Click to find your nearest hospital health centre, GP and more.</string>
     <string name="prompt_navigation">Start navigation to %s, %s?</string>
     <string name="prompt_location_permission">Need permission to find your nearest hospital, health centre, GP and more.</string>
+    <string name="prompt_audio">Audio Recording</string>
+    <string name="prompt_audio_permission">Need permission to record audio for Speech-To-Text feature.</string>
 
     <string name="action_logout">Logout</string>
     <string name="action_delete_account">Delete Account</string>
@@ -55,7 +57,7 @@
     <string name="message_action_failure">Failed to %s - please try again later.</string>
     <string name="message_action_success">%s successfully!</string>
     <string name="message_authentication_error">Failed to authenticate user - please login.</string>
-    <string name="message_tap_voice">Tap on the message to enable TTS service.</string>
+    <string name="message_tap_voice">Touch and hold a message to enable TTS service.</string>
     <string name="message_chat_error">Unhandled message type.</string>
     <string name="message_listening_started">Listening - click to stop.</string>
     <string name="message_listening_stopped">Stopped listening.</string>
