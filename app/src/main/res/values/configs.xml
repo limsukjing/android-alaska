@@ -3,6 +3,11 @@
     <!--Maps SDK credentials-->
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyAxn_TC6TleKPJes0bO3GAdtBL0tnvfDOY</string>
 
+    <!--Spotify SDK credentials-->
+    <string name="spotify_client_id">58e71314fe2e4c35ad9dc5a669c44bff</string>
+    <string name="spotify_redirect_uri">https://ie.tudublin.alaska://callback</string>
+    <string name="spotify_access_token">BQBg7A5_nDTHTKVMLk6ZNiK0ij1ufBDduOLlu8MyBIOUC0NQwVrSwAHEO6GzLPf9STl00GZqwWNuRmG1x2036Zldl2r7x2hbhpdtyS482EZPAKwNTCwwQaQS6t6pkAMnImliRiqytDrnQKdv4N4d</string>
+
     <!--Facebook SDK credentials-->
     <string name="facebook_application_id">2754246241292665</string>
     <string name="fb_login_protocol_scheme">fb2754246241292665</string>

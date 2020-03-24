@@ -13,6 +13,7 @@ import androidx.cardview.widget.CardView;
 import androidx.viewpager.widget.PagerAdapter;
 import ie.tudublin.alaska.R;
 import ie.tudublin.alaska.activities.discover.MapsActivity;
+import ie.tudublin.alaska.activities.discover.SpotifyActivity;
 import ie.tudublin.alaska.helper.Util;
 import ie.tudublin.alaska.model.Page;
 
@@ -62,6 +63,8 @@ public class DiscoverAdapter extends PagerAdapter {
     }
 
     private void redirectPodcast() {
+        Intent podcastIntent = new Intent(mContext, SpotifyActivity.class);
+        mContext.startActivity(podcastIntent);
     }
 
     @Override

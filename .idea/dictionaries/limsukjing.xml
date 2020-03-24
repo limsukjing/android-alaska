@@ -7,9 +7,11 @@
       <w>firebase</w>
       <w>firestore</w>
       <w>noto</w>
+      <w>pbdt</w>
       <w>playlists</w>
       <w>podcast</w>
       <w>podcasts</w>
+      <w>spotify</w>
     </words>
   </dictionary>
 </component>
