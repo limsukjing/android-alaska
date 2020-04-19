@@ -69,5 +69,4 @@
     <string name="message_location_error">Invalid location.</string>
     <string name="message_location_empty">Please select a different address.</string>
     <string name="message_hospital_empty">No nearby hospitals.</string>
-    <string name="message_spotify_connection_success">Connected to Spotify API.</string>
 </resources>

@@ -11,7 +11,6 @@ import ie.tudublin.alaska.R;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 public class SpotifyActivity extends AppCompatActivity {
 
@@ -62,7 +61,6 @@ public class SpotifyActivity extends AppCompatActivity {
             @Override
             public void onConnected(SpotifyAppRemote spotifyAppRemote) {
                 mSpotifyAppRemote = spotifyAppRemote;
-                Toast.makeText(SpotifyActivity.this, R.string.message_spotify_connection_success, Toast.LENGTH_SHORT).show();
                 connected();
             }
 

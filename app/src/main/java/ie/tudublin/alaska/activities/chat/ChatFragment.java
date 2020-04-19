@@ -57,6 +57,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import ie.tudublin.alaska.R;
+import ie.tudublin.alaska.activities.discover.SpotifyActivity;
 import ie.tudublin.alaska.adapter.ChatAdapter;
 import ie.tudublin.alaska.helper.ClickListener;
 import ie.tudublin.alaska.helper.RecyclerTouchListener;
@@ -328,11 +329,12 @@ public class ChatFragment extends Fragment {
      */
     private void handleRedirect(String text) {
         boolean profilePage = text.contains("to the Profile page");
-        boolean discoverPage = text.contains("to the Discover page") || text.contains("with the podcasts");
+        boolean discoverPage = text.contains("to the Discover page");
         boolean journalPage = text.contains("to the Journal page") || text.contains("with the journal entry");
         boolean sendIntent = text.contains("with the texts");
         boolean callIntent = text.contains("with the phone call") || text.matches(".* call \\d+\\. Good luck!");
         boolean urlIntent = text.contains("with the walk") || text.contains("with the workout") || text.contains("with the movie") || text.contains("with the café-hopping") || text.contains("with the volunteering activity");
+        boolean spotifyIntent = text.contains("with the podcasts");
 
         if (profilePage) {
             NavHostFragment.findNavController(this).navigate(R.id.redirect_profile);
@@ -364,6 +366,9 @@ public class ChatFragment extends Fragment {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(url));
             if (intent.resolveActivity(mContext.getPackageManager()) != null) startActivity(intent);
+        } else if (spotifyIntent) {
+            Intent intent = new Intent(getActivity(), SpotifyActivity.class);
+            startActivity(intent);
         }
     }
 
